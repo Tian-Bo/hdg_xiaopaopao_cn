@@ -1,0 +1,236 @@
+<template>
+    <div class="activity" v-loading="loading">
+        <div class="act-header">
+            <el-input placeholder="请输入活动名称" v-model="name" class="input-with-select">
+                <el-button
+                    slot="append"
+                    icon="el-icon-search"
+                    class="search-btn"
+                    @click="searchBtn"
+                >搜索</el-button>
+            </el-input>
+            <el-button type="primary" @click="getRecycle">{{ recycleIn }}</el-button>
+        </div>
+
+        <el-tabs v-model="activeName" @tab-click="handleClick" style="padding-left: 10px; display: inline-block;">
+            <el-tab-pane label="扩客红包" name="0">
+            </el-tab-pane>
+            <el-tab-pane label="组队拼团" name="1">
+            </el-tab-pane>
+        </el-tabs>
+
+        <act-main :data="data" :listState="listState" @editDelte="editDelte" v-show="activeName==0" />
+        <act-assemble :data="data" :listState="listState" @editDelte="editDelte" v-show="activeName==1" />
+
+
+        <div class="act-Footer">
+            <el-pagination
+                @current-change="currentChange"
+                background
+                :total="total"
+                layout="total, prev, pager, next, jumper"
+                :current-page="currentPaging"
+                :show-summary="false"
+            ></el-pagination>
+        </div>
+    </div>
+</template>
+
+<script>
+// 工具函数
+import { timeStamp } from "@/assets/js/unlis.js";
+// ajax
+import { getManageInfo } from "@/api/api";
+// 组件
+import actMain from "./components/act-main";
+// 组件
+import actAssemble from "./components/act-assemble";
+
+export default {
+    data() {
+        return {
+            activeName: '0',
+            data: [],
+            loading: true,
+            name: "", // 搜索数据
+            nameAff: "",
+            nameNo: "",
+            total: 0, // 分页数
+            recycleIn: "活动回收站", //活动回收站文字
+            listState: true, // 活动回收站状态
+            isDel: 0, // 活动回收站切换
+            page: 1, // 当前分页记录值
+            pageAff: 1, // 普通分页记录值
+            pageNo: 1, // 回收站分页记录值
+            pageShow: false, //搜索重定向到第一页
+            currentPaging: 1 // 重定向分页记录值
+        };
+    },
+    components: {
+        actMain,
+        actAssemble
+    },
+    methods: {
+        // 获取数据
+        getData() {
+            let _that = this;
+
+            if (_that.listState) {
+                _that.page = _that.pageAff;
+                _that.name = _that.nameAff;
+            } else {
+                _that.page = _that.pageNo;
+                _that.name = _that.nameNo;
+            }
+
+            if (_that.pageShow) {
+                _that.page = 1;
+            }
+
+            let params = {
+                shop_id: localStorage.getItem("shop_id"),
+                token: localStorage.getItem("token"),
+                page: _that.page,
+                name: _that.name,
+                is_del: _that.isDel,
+            };
+
+            getManageInfo({ params }).then(res => {
+                if (res.data.status === 0) {
+                    _that.pageShow = false;
+                    // 1, 获取当前时间戳
+                    let currentTime = new Date().getTime();
+
+                    // 2, 把数组对象的start_time, end_time时间转时间戳
+
+                    res.data.data.items.forEach((item, index) => {
+                        let end_time = timeStamp(item.end_time);
+                        let start_time = timeStamp(item.start_time);
+                        item["edit_quota"] = false;
+                        item["ref"] = "input" + index;
+                        // 3, 比对时间戳 重新追加状态到数组中
+                        // 3.1 未开启===满足条件: 开始时间 > 当前时间 赋值2代表未开启
+                        if (start_time > currentTime) {
+                            item["is_pause"] = 2;
+                            return;
+                        }
+
+                        // 3.2 已结束===满足条件: 结束时间 < 当前时间 赋值3代表已结束
+                        if (end_time < currentTime) {
+                            item["is_pause"] = 3;
+                            return;
+                        }
+
+                        // 3.3 已满额===满足条件: 剩余报名数 = 0 赋值4代表已满额
+                        if (item.diff == 0) {
+                            item["full_amount"] = true;
+                            return;
+                        }
+
+                        // 3.4 即将结束===满足条件: 结束时间-当前时间 < 一天 赋值5代表即将结束
+                        if (end_time - currentTime < 24 * 60 * 60 * 1000 - 1) {
+                            item["overdue"] = true;
+                        }
+                    });
+
+                    _that.total = res.data.data.total;
+                    _that.currentPaging = _that.page;
+                    _that.data = res.data.data;
+                    this.loading = false;
+                }
+            });
+        },
+        // 编辑删除
+        editDelte() {
+            let _that = this;
+            if (_that.page > 1 && _that.data.length == 1) {
+                if (_that.listState) {
+                    _that.pageAff--;
+                } else {
+                    _that.pageNo--;
+                }
+            }
+            _that.getData();
+        },
+        // 搜索
+        searchBtn() {
+            let _that = this;
+            _that.pageShow = true;
+            if (_that.listState) {
+                _that.nameAff = _that.name;
+            } else {
+                _that.nameNo = _that.name;
+            }
+            _that.getData();
+        },
+        // 活动回收站
+        getRecycle() {
+            let _that = this;
+            if (_that.listState) {
+                _that.recycleIn = "返回";
+                _that.listState = false;
+                _that.isDel = 1;
+                _that.getData();
+            } else {
+                _that.recycleIn = "活动回收站";
+                _that.listState = true;
+                _that.isDel = 0;
+                _that.getData();
+            }
+        },
+        // 分页
+        currentChange(val) {
+            let _that = this;
+            if (_that.listState) {
+                _that.pageAff = val;
+            } else {
+                _that.pageNo = val;
+            }
+            _that.getData();
+        },
+        // 标签页
+        handleClick() {
+            if (this.activeName == 0) {
+                
+            }
+            if (this.activeName == 1) {
+
+            }
+        }
+    },
+    created() {
+        let _that = this;
+        _that.getData();
+    }
+};
+</script>
+
+<style scoped lang="scss">
+.activity {
+    background: #fff;
+    padding-top: 20px;
+    margin-bottom: 20px;
+}
+
+// header 搜索
+.act-header {
+    padding-right: 20px;
+    float: right;
+    margin-bottom: 30px;
+    .el-input {
+        width: 300px;
+        margin-right: 10px;
+    }
+    .el-input-group__append button.el-button {
+        background-color: #409eff;
+        color: #fff;
+        border: 1px solid #409eff;
+    }
+}
+
+// footer 分页
+.act-Footer {
+    padding: 30px 0;
+    text-align: center;
+}
+</style>

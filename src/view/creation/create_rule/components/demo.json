@@ -1,0 +1,61 @@
+{
+    "conditions": [
+      {
+        "title": "常规模式",
+        "text": "任何人任何情况下推荐好友成功参与活动后，都可以正常获得对应的返现",
+        "pattern": 1,
+        "isShow": true
+      },
+      {
+        "title": "强制模式",
+        "text": "需要推荐人已支付，推荐好友成功参与活动后才能正常获得返现",
+        "pattern": 2,
+        "isShow": false
+      },
+      {
+        "title": "激励模式",
+        "text": "推荐人未报名参与活动时，推荐好友成功参与活动，可拿一级返现，成功报名参与活动后，推荐好友参与活动可拿二级返现",
+        "pattern": 3,
+        "isShow": false
+      }
+    ],
+    "pay_method": [
+      {
+        "title": "红包模式",
+        "text": "返现奖励将以微信红包的形式自动发放到推荐者个人微信",
+        "pattern": 1,
+        "icon": "iconfont iconweixinzhifu",
+        "color": "green",
+        "isShow": true
+      },
+      {
+        "title": "零钱模式",
+        "text": "返现奖励将以微信零钱的形式自动发放到推荐者微信零钱",
+        "pattern": 2,
+        "icon": "iconfont iconhongbao",
+        "color": "#f20",
+        "isShow": false
+      }
+    ],
+    "binding": [
+      {
+        "title": "默认模式",
+        "text": "上下级关系为临时关系，通过谁分享的海报链接报名，谁就获得返现",
+        "pattern": 1,
+        "isShow": true
+      },
+      {
+        "title": "保护模式",
+        "text": "上下级关系有效期为1天，1天内报名支付均为有效，推荐者可以获得返现，1天后可被抢客，若无人抢客，关系将持续保持",
+        "pattern": 2,
+        "isShow": true
+      },
+      {
+        "title": "永久模式",
+        "text": "上下级关系一经绑定即为永久关系，不允许抢客",
+        "pattern": 3,
+        "isShow": false
+      }
+    ]
+  }
+  

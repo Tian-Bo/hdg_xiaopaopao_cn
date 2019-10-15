@@ -1,4 +1,9 @@
 
+/**
+ * 全局混合器,函数
+ * 命名规范 —— 遵守语义化命名
+ * 必须注释作用
+ */
 //定位全屏
 @mixin allcover {
     position: absolute;
@@ -100,6 +105,7 @@
     line-height: $line-height;
 }
 
+// 遮挡层背景色
 @mixin modalbg($color-bg: rgba(0, 0, 0, 0.2)) {
     position: fixed;
     top: 0;
@@ -109,12 +115,14 @@
     background-color: $color-bg;
 }
 
+// flex布局
 @mixin flex($direction: column, $wrap: nowrap) {
     display: flex;
     flex-direction: $direction;
     flex-wrap: $wrap;
 }
 
+// 清除浮动
 @mixin clear() {
     &:after {
         content: '.';

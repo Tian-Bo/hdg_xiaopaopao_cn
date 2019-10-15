@@ -1,0 +1,28 @@
+{
+  "data": [
+    {
+      "id": 1,
+      "company": "份"
+    },
+    {
+      "id": 2,
+      "company": "张"
+    },
+    {
+      "id": 3,
+      "company": "名额"
+    },
+    {
+      "id": 4,
+      "company": "个"
+    },
+    {
+      "id": 5,
+      "company": "件"
+    },
+    {
+      "id": 6,
+      "company": "自定义"
+    }
+  ]
+}
