@@ -1,3 +1,9 @@
+<!--
+ * @Author: tianbo
+ * @LastEditors: tianbo
+ * @Date: 2019-10-15 13:42:11
+ * @LastEditTime: 2019-10-15 13:42:11
+ -->
 <template>
     <div id="app">
         <router-view />
@@ -9,8 +15,7 @@
 </script>
 
 <style lang="scss">
-@import "./style/reset.scss";
-@import "./style/common.scss";
+@import "./style/main.scss";
 @import "~@/assets/iconfont/iconfont.css";
 #app {
     font-size: $font-size-base;
