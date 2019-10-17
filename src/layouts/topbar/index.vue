@@ -1,5 +1,11 @@
+<!--
+ * @Author: tianbo
+ * @LastEditors: tianbo
+ * @Date: 2019-10-15 17:27:19
+ * @LastEditTime: 2019-10-17 17:19:30
+ -->
 <template>
-    <el-header>
+    <div calss="topbar">
         <div class="header-left">
             <span @click="clickTopBar(false)" v-show="isCollapse">
                 <i class="el-icon-s-fold"></i>
@@ -13,16 +19,16 @@
             <el-dropdown placement="bottom">
                 <i class="el-icon-setting"></i>
                 <el-dropdown-menu slot="dropdown">
-                    <el-dropdown-item v-for="(item, index) in list" :key="index" @click.native="clickEvent(item)">
-                        {{ item.name }}
-                    </el-dropdown-item>
-                    <!-- <el-dropdown-item>切换用户</el-dropdown-item>
-                    <el-dropdown-item >退出登陆</el-dropdown-item> -->
+                    <el-dropdown-item
+                        v-for="(item, index) in list"
+                        :key="index"
+                        @click.native="clickEvent(item)"
+                    >{{ item.text }}</el-dropdown-item>
                 </el-dropdown-menu>
             </el-dropdown>
             <span>{{ username }}</span>
         </div>
-    </el-header>
+    </div>
 </template>
 
 <script>
@@ -31,36 +37,43 @@ export default {
         // 显示状态
         menuText: {
             type: String,
-            default: ''
+            default: ""
         },
         // 用户名
         username: {
             type: String,
-            default: ''
+            default: ""
         },
         // 标题
         list: {
             type: Array,
             default: []
-        },
+        }
+    },
+    data() {
+        return {
+            isCollapse: false
+        };
     },
     methods: {
         // 箭头切换
-        clickTopBar(item) {
-            this.$emit('clickTopBar', item)
+        clickTopBar(bol) {
+            this.isCollapse = bol;
+            this.$emit("clickTopBar", bol);
         },
         // 个人中心点击
         clickEvent(item) {
-            this.$emit('clickEvent', item)
+            this.$emit("clickEvent", item);
         }
-    },
-}
+    }
+};
 </script>
 
 <style lang="scss" scoped>
-.el-header {
+.topbar {
+    // width: 100%;
     display: flex;
-    height: 50px !important;
+    // height: 50px !important;
     align-items: center;
     justify-content: space-between;
     background-color: #fff;

@@ -2,14 +2,24 @@
  * @Author: tianbo
  * @LastEditors: tianbo
  * @Date: 2019-10-15 13:42:11
- * @LastEditTime: 2019-10-17 14:23:36
+ * @LastEditTime: 2019-10-17 18:00:36
  -->
 <template>
     <div class="layout-container">
         <el-container class="content-body">
-            <sidebar :isCollapse="isCollapse" :list="list" @clickMenu="clickMenu" />
+            <el-aside width="180px">
+                <sidebar :isCollapse="isCollapse" :list="list" @clickMenu="clickMenu" />
+            </el-aside>
             <el-container>
-                <topbar :menuText="menuText" :username="username" :list="topList" @clickTopBar="clickTopBar" @clickEvent="clickEvent" />
+                <el-header>
+                    <topbar
+                        :menuText="menuText"
+                        :username="username"
+                        :list="topList"
+                        @clickTopBar="clickTopBar"
+                        @clickEvent="clickEvent"
+                    />
+                </el-header>
                 <el-main style="background: #e5e5e5;">
                     <slot></slot>
                 </el-main>
@@ -21,8 +31,8 @@
 <script>
 // import { getUserInfo } from "@/api/common";
 
-import sidebar from './sidebar/index.vue'
-import topbar from './topbar/index.vue'
+import sidebar from "./sidebar/index.vue";
+import topbar from "./topbar/index.vue";
 
 export default {
     components: {
@@ -34,12 +44,13 @@ export default {
             isCollapse: false, // 关闭显示导航
             list: this.$router.options.routes, // 列表
             topList: [
-                { text: '个人中心', route: '' },
-                { text: '切换用户', route: '' },
-                { text: '退出登陆', route: '' },
+                { text: "个人中心", route: "" },
+                { text: "切换用户", route: "" },
+                { text: "退出登陆", route: "" }
             ],
             data: [], // 用户信息
-            menuText: '概况', // 展示标题
+            username: '18580557309',
+            menuText: "概况" // 展示标题
         };
     },
     methods: {
@@ -53,22 +64,20 @@ export default {
         },
         // TODO 退出登陆
         withdrawLogin() {
-            window.sessionStorage.removeItem('token');
+            window.sessionStorage.removeItem("token");
             this.$router.push({ path: "/login" });
         },
         // sidebar
         clickMenu(data) {
-            this.menuText = item.name
+            this.menuText = item.name;
         },
         // topbar 状态切换
         clickTopBar(data) {
-            this.isCollapse = data
+            this.isCollapse = data;
         },
         // topbar 设置下拉框点击
-        clickEvent(data) {
-
-        }
-    },  
+        clickEvent(data) {}
+    },
     created() {
         // this.getUserInfo();
     }

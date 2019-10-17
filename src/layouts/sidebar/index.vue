@@ -1,14 +1,20 @@
+<!--
+ * @Author: tianbo
+ * @LastEditors: tianbo
+ * @Date: 2019-10-15 17:27:10
+ * @LastEditTime: 2019-10-17 18:00:56
+ -->
 <template>
     <div class="navbar">
         <div style="overflow-y: auto; height: 100%;">
             <el-menu
                 :collapse="isCollapse"
                 class="navbar-el-menu"
-                background-color="#304156"
-                text-color="#BFCBD9"
+                background-color="#fff"
+                text-color="#333"
                 active-text-color="#409EFF"
             >
-                <h1 class="navbar-logo">{{ isCollapse ? '活': '活动阁'}}</h1>
+                <h1 class="navbar-logo">{{ isCollapse ? '活': '活动阁' }}</h1>
                 <el-submenu
                     v-for="(item, index) in list"
                     :index="index.toString()"

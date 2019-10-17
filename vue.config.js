@@ -1,3 +1,9 @@
+/*
+ * @Author: tianbo
+ * @LastEditors: tianbo
+ * @Date: 2019-10-15 13:42:11
+ * @LastEditTime: 2019-10-17 16:20:44
+ */
 // vue.config.js
 const path = require('path');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
@@ -46,7 +52,7 @@ module.exports = {
             sass: {
                 data: `
                 @import "@/style/mixin.scss";
-                @import "@/style/_var.scss";
+                @import "@/style/var.scss";
                 `
             }
         }

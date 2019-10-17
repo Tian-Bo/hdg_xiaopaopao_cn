@@ -1,3 +1,9 @@
+/*
+ * @Author: tianbo
+ * @LastEditors: tianbo
+ * @Date: 2019-10-15 13:42:11
+ * @LastEditTime: 2019-10-17 16:19:41
+ */
 import Vue from 'vue'
 import Router from 'vue-router'
 
@@ -212,10 +218,10 @@ import User from '../view/user/index' // 用户管理
 
 // import ExService from '../view/service/expense/index' // 服务中心-费用&发票
 // import Record from '../view/service/record/index' // 服务中心-开票记录
-import OpenService from '../view/service/openservice/index' // 服务中心-开通服务
-import Management from '../view/service/expense/management/index' // 服务中心-我的开票资料
-import Inspection from '../view/service/expense/inspection/index' // 服务中心-开票核对
-import Provisioning from '../view/service/provisioning/index' // 服务中心-开通服务
+// import OpenService from '../view/service/openservice/index' // 服务中心-开通服务
+// import Management from '../view/service/expense/management/index' // 服务中心-我的开票资料
+// import Inspection from '../view/service/expense/inspection/index' // 服务中心-开票核对
+// import Provisioning from '../view/service/provisioning/index' // 服务中心-开通服务
 // import orderPay from '../view/service/orderPay/index' // 服务中心-开通服务
 
 import Setting from '../view/setting/index' // 设置

@@ -1,3 +1,9 @@
+/*
+ * @Author: tianbo
+ * @LastEditors: tianbo
+ * @Date: 2019-10-15 13:42:11
+ * @LastEditTime: 2019-10-15 13:42:11
+ */
 /**
  * 请求统一管理
  */
@@ -19,14 +25,6 @@
 // export const rankGender = data => Request.get('/ranking/gender', data)
 // export const rankGender = data => Request.get('/ranking/gender', data)
 // export const rankGender = data => Request.get('/ranking/gender', data)
-
-
-
-
-
-
-
-
 
 
 // hdg begin
